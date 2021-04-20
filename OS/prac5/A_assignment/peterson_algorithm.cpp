@@ -10,8 +10,9 @@ using namespace std;
 int critical_section_variable=0;
 
 atomic_int turn(0);
-atomic_int flag0(0), flag1(1);
+atomic_int flag0(0), flag1(0);
 
+//본인것 1, turn은 상대방. while(flag[상대방] and turn == 상대방)
 void lock(int self){
    
     if(self == 0){
@@ -23,10 +24,11 @@ void lock(int self){
         flag1 = 1;
         turn = 1;
         while(flag0 == 1 && turn == 0);
-
+    
     }
 
 }
+// 본인것 0
 void unlock(int self){
     
     if(self == 0){
